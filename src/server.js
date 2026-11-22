@@ -12,7 +12,7 @@ const token = process.env.OPENSUBTITLES_TOKEN;
 const signingSecret = process.env.SUBTITLE_SIGNING_SECRET;
 const port = Number(process.env.PORT || 7000);
 const publicUrl = (
-  process.env.PUBLIC_URL || `http://127.0.0.1:${port}`
+  process.env.PUBLIC_URL || process.env.RENDER_EXTERNAL_URL || `http://127.0.0.1:${port}`
 ).replace(/\/$/, '');
 
 if (!signingSecret || signingSecret.length < 32) {

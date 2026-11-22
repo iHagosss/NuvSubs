@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: nuvsubs
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: OPENSUBTITLES_API_KEY
+        sync: false
+      - key: OPENSUBTITLES_TOKEN
+        sync: false
+      - key: SUBTITLE_SIGNING_SECRET
+        generateValue: true
