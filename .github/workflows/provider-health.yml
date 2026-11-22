@@ -1,0 +1,26 @@
+name: Provider and deployment health check
+on:
+  schedule:
+    - cron: '23 7 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/check-provider.js'
+      - '.github/workflows/provider-health.yml'
+permissions:
+  contents: read
+jobs:
+  provider-health:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check credentials and deployed addon
+        env:
+          OPENSUBTITLES_API_KEY: ${{ secrets.OPENSUBTITLES_API_KEY }}
+          OPENSUBTITLES_TOKEN: ${{ secrets.OPENSUBTITLES_TOKEN }}
+          ADDON_URL: ${{ vars.ADDON_URL }}
+        run: node scripts/check-provider.js
